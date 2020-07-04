@@ -63,7 +63,7 @@ public class AllTest {
         System.out.println();
         FileResource fr = new FileResource(path+"oslusiadas_key17.txt");
 
-        caesarCracker=new CaesarCracker("a".charAt(0));
+        caesarCracker=new CaesarCracker('a');
 
         String encrypted=caesarCracker.decrypt(fr.asString());
         System.out.println(encrypted);
@@ -99,7 +99,7 @@ public class AllTest {
 
         FileResource fr = new FileResource(path+"athens_keyflute.txt");
 
-        int[] result=vigenereBreaker.tryKeyLength(fr.asString(),5,"a".charAt(0));
+        int[] result=vigenereBreaker.tryKeyLength(fr.asString(),5,'a');
         for(int i=0;i<result.length;i++){
             System.out.print(result[i]+" ");
 
