@@ -8,9 +8,7 @@ import edu.duke.FileResource;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class AllTest {
 
@@ -154,5 +152,37 @@ public class AllTest {
         String decyripted= vigenereBreaker.breakForLanguage(fileResourceMessage.asString(),vigenereBreaker.readDictionary(fileResourceDictionary));
         System.out.println(decyripted);
     }
+
+    @Test
+    public void testMostCommonCharIn(){
+
+        System.out.println("testing mostCommonCharIn...");
+        System.out.println();
+
+        FileResource fileResourceDictionary = new FileResource(dictionariesPath+"English");
+        Character c=vigenereBreaker.mostCommonCharIn(vigenereBreaker.readDictionary(fileResourceDictionary));
+        System.out.println(c);
+
+    }
+
+    @Test
+    public void testBreakForAllLangs(){
+
+        System.out.println("testing breakForAllLangs...");
+        System.out.println();
+
+
+        HashMap<String,HashSet<String>> dictionary=new HashMap<>();
+
+        ArrayList<String> langList=new ArrayList<>( Arrays.asList("English", "Danish", "Dutch", "French", "German", "Italian", "Portuguese", "Spanish"));
+        for(String lang:langList){
+            dictionary.put(lang,vigenereBreaker.readDictionary(new FileResource(dictionariesPath+lang)));
+        }
+        FileResource fileResourceMessage = new FileResource(path+"athens_keyflute.txt");
+
+        vigenereBreaker.breakForAllLangs(fileResourceMessage.asString(),dictionary);
+
+    }
+
 
 }
