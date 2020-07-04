@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class AllTest {
 
@@ -19,6 +21,7 @@ public class AllTest {
     VigenereBreaker vigenereBreaker;
 
     String path;
+    String dictionariesPath;
 
     @Before
     public void initialize() {
@@ -27,6 +30,7 @@ public class AllTest {
         vigenereCipher=new VigenereCipher(new int[]{17, 14, 12, 4});
         vigenereBreaker=new VigenereBreaker();
         path=System.getProperty("user.dir") + "\\src\\main\\resources\\data\\";
+        dictionariesPath=System.getProperty("user.dir") + "\\src\\main\\resources\\dictionaries\\";
    }
 
     @Test
@@ -113,6 +117,42 @@ public class AllTest {
         System.out.println();
 
         vigenereBreaker.breakVigenere();
+    }
+
+    @Test
+    public void testReadDictionary(){
+
+        System.out.println("testing readDictionary...");
+        System.out.println();
+
+        FileResource fr = new FileResource(dictionariesPath+"English");
+        Set result= vigenereBreaker.readDictionary(fr);
+        System.out.println(result);
+
+    }
+
+    @Test
+    public void testCountWords(){
+
+        System.out.println("testing countWords...");
+        System.out.println();
+
+        FileResource fileResourceMessage = new FileResource(path+"titus-small.txt");
+        FileResource fileResourceDictionary = new FileResource(dictionariesPath+"English");
+        Integer count=vigenereBreaker.countWords(fileResourceMessage.asString(),vigenereBreaker.readDictionary(fileResourceDictionary));
+        System.out.println(count);
+    }
+
+    @Test
+    public void testBreakForLanguage(){
+
+        System.out.println("testing breakForLanguage...");
+        System.out.println();
+
+        FileResource fileResourceMessage = new FileResource(path+"athens_keyflute.txt");
+        FileResource fileResourceDictionary = new FileResource(dictionariesPath+"English");
+        String decyripted= vigenereBreaker.breakForLanguage(fileResourceMessage.asString(),vigenereBreaker.readDictionary(fileResourceDictionary));
+        System.out.println(decyripted);
     }
 
 }
